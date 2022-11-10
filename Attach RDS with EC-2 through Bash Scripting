@@ -1,0 +1,49 @@
+-> Connect with EC2 instance through SSH
+-> create RDS DB MySQL.
+-> vi connect.sh    ## bash script file with .sh extension
+#!/bin/bash
+
+
+RDS_MYSQL_ENDPOINT="database-1.c8fume8xh0ht.us-east-1.rds.amazonaws.com";  
+RDS_MYSQL_USER="rds_test"
+#RDS_MYSQL_PASS="ashi1234";
+#RDS_MYSQL_BASE="database-1";
+
+mysql -h $RDS_MYSQL_ENDPOINT -P 3306 -u $RDS_MYSQL_USER -p
+
+if [[ $? -eq 0 ]]; then
+    echo "MySQL connection: OK";
+else
+    echo "MySQL connection: Fail";
+fi;
+
+-> bash connect.sh or ./ connectl.sh  ## run the script
+-> now it asking the MySQL DB password after entering the password we are able to connect the RDS DB with EC2 instance.
+-> Now we can create table data,queries,etc. on this DB 
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+Now we write a query to create table :
+
+CREATE DATABASE ShopDB  #this creates DB for ShopDB
+
+use ShopsDB  #now we can use that particular DB
+
+CREATE TABLE shop (
+			article INT UNSIGNED  DEFAULT '0000' NOT NULL,
+           dealer  CHAR(20)      DEFAULT ''     NOT NULL,
+           price   DECIMAL(16,2) DEFAULT '0.00' NOT NULL,
+           PRIMARY KEY(article, dealer));
+INSERT INTO shop VALUES
+           (1,'A',3.45),(1,'B',3.99),(2,'A',10.99),(3,'B',1.45),
+           (3,'C',1.69),(3,'D',1.25),(4,'D',19.95);
+           
+After writing this, we are performing the CRUD operations
+run,
+select * from shop; #this showcasing your table which created from the above query
+
+INSERT INTO shop (__) VALUES (__); #insert or adding elements and its value into the table
+
+DELETE FROM Customers WHERE datafromtable; #deleting the element from table 
+          
+-------------------------------------------------------------------------------------------------------------------------------------------------
+After that go to AWS->Services->RDS->databases->:->take snapshot/backup->snapshot created.
+for deletion -> Select the snapshot and from action you can delete the snapshot.
